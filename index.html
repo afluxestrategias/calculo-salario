@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Do Líquido ao Bruto</title>
+<title>Cálculo Salário</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,7 +140,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
       <span class="eyebrow">CLT · tabelas INSS e IRRF de 2026</span>
     </div>
     <div class="titles">
-      <h1 id="titulo">Do bruto ao líquido</h1>
+      <h1 id="titulo">Salário do Colaborador – Do bruto ao líquido</h1>
       <p class="lede" id="lede"></p>
     </div>
   </header>
@@ -318,7 +318,7 @@ function calc(){
   const o={dep:Math.max(0,parseInt($("dep").value)||0),vt:false,outros:parse($("outros").value),pensao:0};
   const modoBruto=$("tab-bru").getAttribute("aria-selected")==="true";
   $("fLiq").hidden=modoBruto; $("fBru").hidden=!modoBruto;
-  $("titulo").textContent=modoBruto?"Do bruto ao líquido":"Do líquido ao bruto";
+  $("titulo").textContent=modoBruto?"Salário do Colaborador – Do bruto ao líquido":"Salário do Colaborador – Do líquido ao bruto";
   $("lede").textContent=modoBruto
     ?"Digite o salário bruto da carteira. A calculadora mostra quanto sai de INSS, de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta. O valor abaixo é um exemplo."
     :"Digite quanto quer receber na conta. A calculadora encontra o salário bruto que, depois do INSS, do Imposto de Renda e dos descontos que você marcar, chega exatamente nesse valor. O valor abaixo é um exemplo.";
