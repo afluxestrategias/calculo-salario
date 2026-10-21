@@ -50,6 +50,7 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,5vw,44px);l
   border-bottom:3px solid transparent;margin-bottom:-1px;padding:10px 10px;cursor:pointer;white-space:nowrap}
 .tabs button:hover{color:var(--ink)}
 .tabs button[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--rose)}
+@media (min-width:841px){.tabs{flex-wrap:nowrap}.tabs button{flex:1 1 0;font-size:14px;padding-inline:6px;text-align:center}}
 .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;align-items:start}
 @media (max-width:840px){.grid{grid-template-columns:1fr}}
 h2{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0;color:var(--accent)}
