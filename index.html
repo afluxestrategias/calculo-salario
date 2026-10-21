@@ -90,7 +90,7 @@ th{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--mute
 td{font-family:var(--f-mono);font-size:14px}
 td.desc{font-family:var(--f-body);font-size:15px}
 td.desc small{display:block;color:var(--muted);font-size:12px}
-td.cod{color:var(--muted);width:56px}
+.holerite th:nth-child(2),.holerite td:nth-child(2){text-align:right}
 td.neg{color:var(--minus)}
 tfoot td{font-weight:600;border-bottom:0}
 tfoot tr.liq td{background:var(--accent-soft);font-size:16px}
@@ -200,7 +200,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
         </div>
         <div class="tbox">
           <table>
-            <thead><tr><th>Cód.</th><th>Descrição</th><th>Ref.</th><th>Proventos</th><th>Descontos</th></tr></thead>
+            <thead><tr><th>Descrição</th><th>Ref.</th><th>Proventos</th><th>Descontos</th></tr></thead>
             <tbody id="rubricas"></tbody>
             <tfoot id="totais"></tfoot>
           </table>
@@ -362,10 +362,10 @@ function calc(){
 
   $("rubricas").innerHTML=rows.map(([c,d,ref,p,dsc,refAlt])=>{
     const isSmall=String(ref).startsWith("<small>");
-    return `<tr><td class="cod">${c}</td><td class="desc">${d}${isSmall?ref:""}</td><td>${isSmall?(refAlt||(d==="INSS"?"progr.":"")):ref}</td><td>${p!=null?num(p):""}</td><td class="${dsc!=null?"neg":""}">${dsc!=null?num(dsc):""}</td></tr>`;
+    return `<tr><td class="desc">${d}${isSmall?ref:""}</td><td>${isSmall?(refAlt||(d==="INSS"?"progr.":"")):ref}</td><td>${p!=null?num(p):""}</td><td class="${dsc!=null?"neg":""}">${dsc!=null?num(dsc):""}</td></tr>`;
   }).join("");
-  $("totais").innerHTML=`<tr><td></td><td class="desc">Totais</td><td></td><td>${num(r.bruto)}</td><td class="neg">${num(totalDesc)}</td></tr>
-    <tr class="liq"><td></td><td class="desc">Líquido a receber</td><td></td><td></td><td>${num(r.liq)}</td></tr>`;
+  $("totais").innerHTML=`<tr><td class="desc">Totais</td><td></td><td>${num(r.bruto)}</td><td class="neg">${num(totalDesc)}</td></tr>
+    <tr class="liq"><td class="desc">Líquido a receber</td><td></td><td></td><td>${num(r.liq)}</td></tr>`;
 
   $("bInss").textContent=brl(Math.min(r.bruto,INSS[3][0]));
   $("bIr").textContent=brl(r.ir.base)+(r.ir.usaSimpl?" (simplificado)":"");
