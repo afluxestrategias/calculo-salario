@@ -149,6 +149,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
     <button type="button" role="tab" id="tab-bru" aria-selected="true">COLABORADOR: Bruto → Líquido</button>
     <button type="button" role="tab" id="tab-liq" aria-selected="false">COLABORADOR: Líquido → Bruto</button>
     <button type="button" role="tab" id="tab-pro" aria-selected="false">PRÓ-LABORE: Bruto → Líquido</button>
+    <button type="button" role="tab" id="tab-prol" aria-selected="false">PRÓ-LABORE: Líquido → Bruto</button>
   </div>
 
   <div class="grid">
@@ -158,7 +159,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
         <div class="money"><input type="text" inputmode="decimal" id="brt" value="8.000,00"></div>
       </div>
       <div class="field big" id="fLiq" hidden>
-        <label for="liq">Salário líquido desejado</label>
+        <label for="liq" id="liqLbl">Salário líquido desejado</label>
         <div class="money"><input type="text" inputmode="decimal" id="liq" value="6.000,00"></div>
       </div>
 
@@ -230,7 +231,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
           <th>Descrição</th><th>Alíquota</th>
           <th>Simples Nacional<small>Anexos I, II, III e V</small></th>
           <th>Simples Nacional<small>Anexo IV (construção civil/advogados/limpeza e conservação)</small></th>
-          <th>Lucro Real ou<small>Presumido</small></th>
+          <th>Lucro Real ou<small>PRESUMIDO</small></th>
         </tr></thead>
         <tbody id="custoBody"></tbody>
         <tfoot id="custoFoot"></tfoot>
@@ -272,7 +273,7 @@ const INSS=[[1621.00,.075],[2902.84,.09],[4354.27,.12],[8475.55,.14]];
 const IR=[[2428.80,0,0],[2826.65,.075,182.16],[3751.05,.15,394.16],[4664.68,.225,675.49],[Infinity,.275,908.73]];
 const DEP=189.59, SIMPL=607.20;
 const $=id=>document.getElementById(id);
-const TABS=["bru","liq","pro"];
+const TABS=["bru","liq","pro","prol"];
 const TXT={nota:$("custoNota").textContent,rodape:$("rodape").textContent};
 const r2=v=>Math.round(v*100)/100;
 const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
@@ -322,21 +323,24 @@ function brutoPara(alvo,o){
 
 function calc(){
   const modo=TABS.find(m=>$("tab-"+m).getAttribute("aria-selected")==="true");
-  const pro=modo==="pro", modoBruto=modo!=="liq";
+  const pro=modo.startsWith("pro"), modoBruto=modo==="bru"||modo==="pro";
   const o={dep:Math.max(0,parseInt($("dep").value)||0),vt:false,outros:parse($("outros").value),pensao:0,pro};
   $("fLiq").hidden=modoBruto; $("fBru").hidden=!modoBruto;
   $("sst").hidden=pro; $("fRat").hidden=pro;
   $("brtLbl").textContent=pro?"Pró-labore bruto":"Salário bruto";
+  $("liqLbl").textContent=pro?"Pró-labore líquido desejado":"Salário líquido desejado";
   $("fgtsLbl").textContent=pro?"FGTS":"FGTS do mês (8%)";
   $("custoNota").textContent=pro?"Sobre o pró-labore não incidem FGTS, 13º, férias, RAT nem outras entidades. No Simples Nacional (exceto Anexo IV) o INSS patronal já está incluído no DAS.":TXT.nota;
   $("rodape").textContent=pro?"Simulação de um mês de pró-labore de sócio. Não considera distribuição de lucros, que é isenta e não entra neste cálculo. Confira com o departamento pessoal antes de definir o valor.":TXT.rodape;
-  $("titulo").textContent=pro?"Pró-labore – Do bruto ao líquido":modoBruto?"Salário do Colaborador – Do bruto ao líquido":"Salário do Colaborador – Do líquido ao bruto";
+  $("titulo").textContent=(pro?"Pró-labore":"Salário do Colaborador")+(modoBruto?" – Do bruto ao líquido":" – Do líquido ao bruto");
   $("lede").textContent=pro
-    ?"Digite o valor bruto do pró-labore. A calculadora mostra quanto sai de INSS (11%), de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta do sócio. O valor abaixo é um exemplo."
+    ?(modoBruto
+      ?"Digite o valor bruto do pró-labore. A calculadora mostra quanto sai de INSS (11%), de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta do sócio. O valor abaixo é um exemplo."
+      :"Digite quanto o sócio quer receber na conta. A calculadora encontra o pró-labore bruto que, depois do INSS (11%), do Imposto de Renda e dos descontos que você marcar, chega exatamente nesse valor. O valor abaixo é um exemplo.")
     :modoBruto
     ?"Digite o salário bruto da carteira. A calculadora mostra quanto sai de INSS, de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta. O valor abaixo é um exemplo."
     :"Digite quanto quer receber na conta. A calculadora encontra o salário bruto que, depois do INSS, do Imposto de Renda e dos descontos que você marcar, chega exatamente nesse valor. O valor abaixo é um exemplo.";
-  $("answerLbl").textContent=pro?"Pró-labore líquido a receber":modoBruto?"Salário líquido a receber":"Salário bruto necessário";
+  $("answerLbl").textContent=(pro?"Pró-labore":"Salário")+(modoBruto?" líquido a receber":" bruto necessário");
 
   const alvo=parse($("liq").value);
   const r=modoBruto?folha(r2(parse($("brt").value)),o):brutoPara(alvo,o);
