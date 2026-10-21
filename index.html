@@ -130,8 +130,6 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
 .tables td,.tables th{padding:7px 8px;font-size:13px}
 .foot{font-size:13px;color:var(--muted);max-width:80ch;display:grid;gap:6px}
 .foot p{margin:0}
-.foot .importante{padding:10px 12px;border-left:3px solid var(--warn);border-radius:6px;background:var(--warn-soft);color:var(--ink);font-size:14px;font-weight:600}
-.foot .importante strong{color:var(--warn)}
 .sign{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .sign strong{font-family:var(--f-display);font-weight:800;letter-spacing:.04em;color:var(--accent)}
 </style>
@@ -240,8 +238,7 @@ summary{cursor:pointer;font-family:var(--f-display);font-weight:700;font-size:18
       </table>
     </div>
     <div class="foot">
-      <p id="custoNota">Não considerado eventuais horas extras, adicionais e faltas.</p>
-      <p class="importante" id="importante"><strong>IMPORTANTE:</strong> Confira com o departamento pessoal antes de fechar uma proposta.</p>
+      <p id="custoNota">Não considerado eventuais horas extras, adicionais e faltas.<br>Não considerado custos com SST.</p>
     </div>
   </section>
 
@@ -326,7 +323,7 @@ function calc(){
   const pro=modo.startsWith("pro"), modoBruto=modo==="bru"||modo==="pro";
   const o={dep:Math.max(0,parseInt($("dep").value)||0),vt:false,outros:parse($("outros").value),pensao:0,pro};
   $("fLiq").hidden=modoBruto; $("fBru").hidden=!modoBruto;
-  $("sst").hidden=pro; $("importante").hidden=pro; $("fRat").hidden=pro;
+  $("sst").hidden=pro; $("fRat").hidden=pro;
   $("brtLbl").textContent=pro?"Pró-labore bruto":"Salário bruto";
   $("liqLbl").textContent=pro?"Pró-labore líquido desejado":"Salário líquido desejado";
   $("fgtsLbl").textContent=pro?"FGTS":"FGTS do mês (8%)";
