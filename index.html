@@ -336,11 +336,11 @@ function calc(){
   $("titulo").textContent=(pro?"Pró-labore":"Salário do Colaborador")+(modoBruto?" – Do bruto ao líquido":" – Do líquido ao bruto");
   $("lede").textContent=pro
     ?(modoBruto
-      ?"Digite o valor bruto do pró-labore. A calculadora mostra quanto sai de INSS (11%), de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta do sócio. O valor abaixo é um exemplo."
-      :"Digite quanto o sócio quer receber na conta. A calculadora encontra o pró-labore bruto que, depois do INSS (11%), do Imposto de Renda e dos descontos que você marcar, chega exatamente nesse valor. O valor abaixo é um exemplo.")
+      ?"Digite o valor bruto do pró-labore. A calculadora mostra o valor dos impostos e descontos, o valor líquido que você vai se transferir como pró-labore e o custo mensal para a sua empresa."
+      :"Digite o valor que você quer receber líquido. A calculadora mostra o valor dos impostos e descontos, o valor bruto do seu pró-labore e o custo mensal para a sua empresa.")
     :modoBruto
-    ?"Digite o salário bruto da carteira. A calculadora mostra quanto sai de INSS, de Imposto de Renda e dos descontos que você marcar, e quanto chega na conta. O valor abaixo é um exemplo."
-    :"Digite quanto quer receber na conta. A calculadora encontra o salário bruto que, depois do INSS, do Imposto de Renda e dos descontos que você marcar, chega exatamente nesse valor. O valor abaixo é um exemplo.";
+    ?"Digite o salário bruto que você quer pagar ao colaborador. A calculadora mostra qual será o valor líquido que o colaborador irá receber, o valor dos impostos e descontos e o custo mensal para a sua empresa."
+    :"Digite o salário líquido que você quer pagar ao colaborador. A calculadora mostra qual será o valor do salário bruto, o valor dos impostos e descontos e o custo mensal para sua empresa.";
   $("answerLbl").textContent=(pro?"Pró-labore":"Salário")+(modoBruto?" líquido a receber":" bruto necessário");
 
   const alvo=parse($("liq").value);
